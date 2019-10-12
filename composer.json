@@ -1,0 +1,14 @@
+{
+    "name": "aseemann/logbook-simplefe",
+    "description": "Simple frontend for logbook",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Axel Seemann",
+            "email": "kummeraxel@gmail.com"
+        }
+    ],
+    "require": {
+        "textalk/websocket": "^1.2"
+    }
+}
