@@ -2,6 +2,9 @@
     "name": "aseemann/logbook-simplefe",
     "description": "Simple frontend for logbook",
     "type": "project",
+    "license": [
+        "GPL-2.0-or-later"
+    ],
     "authors": [
         {
             "name": "Axel Seemann",
