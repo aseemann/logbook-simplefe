@@ -1,41 +1,15 @@
 <?php
-
 namespace AxelSeemann\TestLog;
-
-use WebSocket\Client;
-
-require_once __DIR__ . '/vendor/autoload.php';
-require_once __DIR__ . '/lib.php';
-
-if(session_id()) {session_close();}
-
-$id      = filter_var($_COOKIE['logbook'], FILTER_SANITIZE_STRING);
-$cookies = [];
-
-foreach ($_COOKIE as $key => $value) {
-    $cookies[] = "$key=$value";
-}
-
-$client = new Client(
-    "ws://{$settings['server']}:{$settings['port']}/api/v1/logbooks/$id/logs",
-    [
-        "options" => [
-            "headers" => [
-                "cookie: " . implode('; ', $cookies)
-            ]
-        ]
-    ]
-);
-
-$client->setTimeout(60);
+session_abort();
+header('Content-Type: application/json');
+$message = null;
+$file = "/tmp/logbook-" . $_COOKIE['logbook'] . ".log";
 $timeOut = time() + 60;
-$client->send('open');
+$lines = count(file($file));
 
-if ($client->isConnected()) {
-    while (time() < $timeOut) {
-        $message = $client->receive();
-        if ($message) {
-            die($message);
-        }
+while (time() < $timeOut) {
+    $data = file($file);
+    if (NULL !== $data[$lines]) {
+        die(trim($data[$lines]));
     }
 }

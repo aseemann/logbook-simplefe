@@ -419,7 +419,7 @@ $(function() {
             }
 
             $loader.addClass('active');
-            var data = JSON.parse(result),
+            var data = result,
                 entry = new LogEntry(data),
                 output = document.getElementById("output");
             utility.getRequestGroup(data, output);

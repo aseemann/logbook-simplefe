@@ -10,8 +10,5 @@
             "name": "Axel Seemann",
             "email": "kummeraxel@gmail.com"
         }
-    ],
-    "require": {
-        "textalk/websocket": "^1.2"
-    }
+    ]
 }
