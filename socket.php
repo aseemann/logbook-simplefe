@@ -1,5 +1,6 @@
 <?php
 namespace AxelSeemann\TestLog;
+ini_set('display_errors','off');
 session_abort();
 header('Content-Type: application/json');
 $message = null;
@@ -9,7 +10,7 @@ $lines = count(file($file));
 
 while (time() < $timeOut) {
     $data = file($file);
-    if (NULL !== $data[$lines]) {
+    if (isset($data[$lines]) && NULL !== $data[$lines]) {
         die(trim($data[$lines]));
     }
 }
