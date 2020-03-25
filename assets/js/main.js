@@ -404,9 +404,21 @@ $(function() {
 
     utility.printStartMessage();
 
+    utility.setLoaderActive = function()
+    {
+        if (false === $loader.hasClass('active')) {
+            $loader.addClass('active');
+        }
+
+        clearTimeout(utility.removeLoader);
+        utility.removeLoader = setTimeout(function () {
+            $loader.removeClass('active')
+        }, 1000);
+    };
+
     function checkForNewMessages()
     {
-        $loader.removeClass('active');
+        utility.setLoaderActive();
         $.ajax({
             type: "GET",
             url: "/logbook/socket.php",
@@ -418,7 +430,6 @@ $(function() {
                 return;
             }
 
-            $loader.addClass('active');
             var data = result,
                 entry = new LogEntry(data),
                 output = document.getElementById("output");

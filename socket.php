@@ -6,11 +6,19 @@ header('Content-Type: application/json');
 $message = null;
 $file = "/tmp/logbook-" . $_COOKIE['logbook'] . ".log";
 $timeOut = time() + 60;
-$lines = count(file($file));
+$stateFile = "/tmp/logbook-" . $_COOKIE['logbook'] . ".state";
+
+$line = 0;
+
+if (file_exists($stateFile)) {
+    $line = (int) file_get_contents($stateFile);
+}
+$line++;
 
 while (time() < $timeOut) {
     $data = file($file);
-    if (isset($data[$lines]) && NULL !== $data[$lines]) {
-        die(trim($data[$lines]));
+    if (isset($data[$line]) && NULL !== $data[$line]) {
+        file_put_contents($stateFile, $line);
+        die(trim($data[$line]));
     }
 }
