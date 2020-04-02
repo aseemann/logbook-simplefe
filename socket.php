@@ -16,9 +16,11 @@ if (file_exists($stateFile)) {
 $line++;
 
 while (time() < $timeOut) {
-    $data = file($file);
-    if (isset($data[$line]) && NULL !== $data[$line]) {
+    $data = array_slice(file($file), $line, null, true);
+    if (false === empty($data)) {
+        end($data);
+        $line = key($data);
         file_put_contents($stateFile, $line);
-        die(trim($data[$line]));
+        die("[" . implode(',', $data) . "]");
     }
 }

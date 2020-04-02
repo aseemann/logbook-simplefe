@@ -430,11 +430,14 @@ $(function() {
                 return;
             }
 
-            var data = result,
-                entry = new LogEntry(data),
-                output = document.getElementById("output");
-            utility.getRequestGroup(data, output);
-            utility.printEntry(entry, data, output);
+            result.forEach(function (element, index) {
+                var data = element,
+                    entry = new LogEntry(data),
+                    output = document.getElementById("output");
+
+                utility.getRequestGroup(data, output);
+                utility.printEntry(entry, data, output);
+            });
             checkForNewMessages();
         });
     }
