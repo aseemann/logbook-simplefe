@@ -424,12 +424,10 @@ $(function() {
             url: "/logbook/socket.php",
             timeout: 60000
         }).done(function(result) {
-
             if (!result) {
                 checkForNewMessages();
                 return;
             }
-
             result.forEach(function (element, index) {
                 var data = element,
                     entry = new LogEntry(data),
@@ -441,6 +439,7 @@ $(function() {
             checkForNewMessages();
         });
     }
+
     checkForNewMessages();
     handleOutput();
 });

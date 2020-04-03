@@ -3,7 +3,7 @@ namespace AxelSeemann\TestLog;
 ini_set('display_errors','off');
 session_abort();
 header('Content-Type: application/json');
-$message = null;
+
 $file = "/tmp/logbook-" . $_COOKIE['logbook'] . ".log";
 $timeOut = time() + 60;
 $stateFile = "/tmp/logbook-" . $_COOKIE['logbook'] . ".state";
@@ -24,3 +24,5 @@ while (time() < $timeOut) {
         die("[" . implode(',', $data) . "]");
     }
 }
+
+die("[]");
