@@ -203,7 +203,7 @@ $(function() {
     {
         var output = "";
 
-        if (context.data.length !== 0) {
+        if (context.data && context.data.length !== 0) {
             output = '<span class="js-toggle-context pull-right"><span class="glyphicon glyphicon-chevron-down"></span>Show Context</span>' +
                 '<div class="clearfix"></div>' +
                 '<div class="context hidden"><table>';
@@ -421,8 +421,7 @@ $(function() {
         utility.setLoaderActive();
         $.ajax({
             type: "GET",
-            url: "/logbook/socket.php",
-            timeout: 60000
+            url: "/logbook/socket.php"
         }).done(function(result) {
             if (!result) {
                 checkForNewMessages();
