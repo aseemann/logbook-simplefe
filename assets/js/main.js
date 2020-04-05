@@ -203,7 +203,7 @@ $(function() {
     {
         var output = "";
 
-        if (context.data.length !== 0) {
+        if (context.data && context.data.length !== 0) {
             output = '<span class="js-toggle-context pull-right"><span class="glyphicon glyphicon-chevron-down"></span>Show Context</span>' +
                 '<div class="clearfix"></div>' +
                 '<div class="context hidden"><table>';
@@ -404,29 +404,41 @@ $(function() {
 
     utility.printStartMessage();
 
+    utility.setLoaderActive = function()
+    {
+        if (false === $loader.hasClass('active')) {
+            $loader.addClass('active');
+        }
+
+        clearTimeout(utility.removeLoader);
+        utility.removeLoader = setTimeout(function () {
+            $loader.removeClass('active')
+        }, 1000);
+    };
+
     function checkForNewMessages()
     {
-        $loader.removeClass('active');
+        utility.setLoaderActive();
         $.ajax({
             type: "GET",
-            url: "/logbook/socket.php",
-            timeout: 60000
+            url: "/logbook/socket.php"
         }).done(function(result) {
-
             if (!result) {
                 checkForNewMessages();
                 return;
             }
+            result.forEach(function (element, index) {
+                var data = element,
+                    entry = new LogEntry(data),
+                    output = document.getElementById("output");
 
-            $loader.addClass('active');
-            var data = result,
-                entry = new LogEntry(data),
-                output = document.getElementById("output");
-            utility.getRequestGroup(data, output);
-            utility.printEntry(entry, data, output);
+                utility.getRequestGroup(data, output);
+                utility.printEntry(entry, data, output);
+            });
             checkForNewMessages();
         });
     }
+
     checkForNewMessages();
     handleOutput();
 });
