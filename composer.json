@@ -10,5 +10,9 @@
             "name": "Axel Seemann",
             "email": "kummeraxel@gmail.com"
         }
-    ]
+    ],
+    "scripts": {
+        "post-install-cmd": "ln -sf {$vendor-dir}/aseemann/logbook-simplefe ${web-dir}/logbook",
+        "post-autoload-dump": "ln -sf {$vendor-dir}/aseemann/logbook-simplefe ${web-dir}/logbook"
+    }
 }
